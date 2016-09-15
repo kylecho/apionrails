@@ -7,13 +7,13 @@ describe ApiConstraints do
   describe "matches?" do
 
     it "returns true when the version matches the 'Accept' header" do
-      request = double(host: 'api.kylecho.local:3000',
-                       headers: {"Accept" => "application/vnd.kylecho.local.v1"})
+      request = double(host: 'api.apionrails.dev',
+                       headers: {"Accept" => "application/vnd.apionrails.v1"})
       api_constraints_v1.matches?(request).should be_truthy
     end
 
     it "returns the default version when 'default' option is specified" do
-      request = double(host: 'api.kylecho.local:3000')
+      request = double(host: 'api.apionrails.dev')
       api_constraints_v2.matches?(request).should be_truthy
     end
   end
