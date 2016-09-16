@@ -23,7 +23,7 @@ describe Authenticable do
     before do
       @user = FactoryGirl.create :user
       authentication.stub(:current_user).and_return(nil)
-      response.stub(:response_body).and_return(401)
+      response.stub(:response_code).and_return(401)
       response.stub(:body).and_return({"errors" => "Not authenticated"}.to_json)
       authentication.stub(:response).and_return(response)
     end
@@ -33,5 +33,25 @@ describe Authenticable do
     end
 
     it { should respond_with 401 }
+  end
+
+  describe "#user_signed_in?" do
+    context "when there is a user on 'session'" do
+      before do
+        @user = FactoryGirl.create :user
+        authentication.stub(:current_user).and_return(@user)
+      end
+
+      it { expect(authentication.user_signed_in?).to be_truthy }
+    end
+
+    context "when there is no user on 'session'" do
+      before do
+        @user = FactoryGirl.create :user
+        authentication.stub(:current_user).and_return(nil)
+      end
+
+      it { expect(authentication.user_signed_in?).to be_falsey }
+    end
   end
 end
