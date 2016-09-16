@@ -7,11 +7,11 @@ describe Api::V1::UsersController do
   describe "GET #show" do
     before(:each) do
       @user = FactoryGirl.create :user
-      get :show, params: { id: @user.id }
+      get :show, params: { id: @user.id }, format: :json
     end
 
     it "returns the information about a reporter on a hash" do
-      user_response = json_response # this come from spec/request_helpers.rb
+      user_response = json_response
       expect(user_response[:email]).to eql @user.email
     end
 
